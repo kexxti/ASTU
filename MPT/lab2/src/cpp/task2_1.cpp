@@ -11,12 +11,12 @@ public:
         ticket_amount = ta;
     }
     void Read() {
-        std::cout << "Enter Ticket price and Ticket Amount\n";
+        std::cout << "Введите цену билета и количество билетов\n";
         std::cin >> ticket_price >> ticket_amount;
     }
     void Display() {
-        std::cout << "Ticket price: " << ticket_price << '\t'
-                  << "Ticket amount: " << ticket_amount << '\n';
+        std::cout << "Цена билета: " << ticket_price << '\t'
+                  << "Количество билетов: " << ticket_amount << '\n';
     }
     double ExpectedRevenue() { return ticket_price * ticket_amount; }
 };
@@ -28,8 +28,11 @@ private:
     char name[100];
 public:
     void Init(const char* n, spectacle s[3], double f[3]) {
+        
         strncpy(name, n, sizeof(name)-1);
+        
         name[sizeof(name)-1] = '\0';
+        
         for (int i = 0; i < 3; i++) {
             specs[i] = s[i];
             fill[i] = f[i];
@@ -37,23 +40,23 @@ public:
     }
 
     void Read() {
-        std::cout << "Enter object name: ";
+        std::cout << "Введите имя объекта: ";
         std::cin.getline(name, sizeof(name));
         for (int i = 0; i < 3; i++) {
-            std::cout << "Spectacle #" << i+1 << ":\n";
+            std::cout << "Спектакль #" << i+1 << ":\n";
             specs[i].Read();
-            std::cout << "Fill (%): ";
+            std::cout << "Посещаемость (%): ";
             std::cin >> fill[i];
         }
         std::cin.ignore();
     }
 
     void Display() {
-        std::cout << "Name: " << name << "\n";
+        std::cout << "Имя: " << name << "\n";
         for (int i = 0; i < 3; i++) {
-            std::cout << "Spectacle #" << i+1 << ": ";
+            std::cout << "Спектакль #" << i+1 << ": ";
             specs[i].Display();
-            std::cout << "Fill: " << fill[i] << "%\n";
+            std::cout << "Посещаемость: " << fill[i] << "%\n";
         }
     }
 
@@ -90,8 +93,8 @@ int main() {
     monday.Init("Monday", s, f);
 
     monday.Display();
-    std::cout << "Total sales: " << monday.TotalSales() << "\n";
-    std::cout << "Minimum sales spectacle: ";
+    std::cout << "Сумма продаж: " << monday.TotalSales() << "\n";
+    std::cout << "Наименее прибыльный спектакль: ";
     monday.MinSalesSpec().Display();
 
     return 0;

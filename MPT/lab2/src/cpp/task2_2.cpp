@@ -11,12 +11,12 @@ public:
         ticket_amount = ta;
     }
     void Read() {
-        std::cout << "Enter Ticket price and Ticket Amount\n";
+        std::cout << "Введите цену билетов и количество билетов\n";
         std::cin >> ticket_price >> ticket_amount;
     }
     void Display() {
-        std::cout << "Ticket price: " << ticket_price << '\t'
-                  << "Ticket amount: " << ticket_amount << '\n';
+        std::cout << "Цена билета: " << ticket_price << '\t'
+                  << "Количество билетов: " << ticket_amount << '\n';
     }
     double ExpectedRevenue() { return ticket_price * ticket_amount; }
 };
@@ -28,20 +28,14 @@ private:
     int count;         // количество спектаклей
     char name[100];
 public:
-    spectaclesPerDay(int n = 3) {
-        count = n;
-        specs = new spectacle[n];
-        fill = new double[n];
-    }
-    ~spectaclesPerDay() {
-        delete[] specs;
-        delete[] fill;
-    }
-
     void Init(const char* n, spectacle s[], double f[], int nCount) {
         count = nCount;
+        specs = new spectacle[count];
+        fill = new double[count];
+
         strncpy(name, n, sizeof(name)-1);
         name[sizeof(name)-1] = '\0';
+
         for (int i = 0; i < count; i++) {
             specs[i] = s[i];
             fill[i] = f[i];
@@ -49,23 +43,23 @@ public:
     }
 
     void Read() {
-        std::cout << "Enter object name: ";
+        std::cout << "Введите имя объекта: ";
         std::cin.getline(name, sizeof(name));
         for (int i = 0; i < count; i++) {
-            std::cout << "Spectacle #" << i+1 << ":\n";
+            std::cout << "Спектакль #" << i+1 << ":\n";
             specs[i].Read();
-            std::cout << "Fill (%): ";
+            std::cout << "Посещаемость (%): ";
             std::cin >> fill[i];
         }
         std::cin.ignore();
     }
 
     void Display() {
-        std::cout << "Name: " << name << "\n";
+        std::cout << "Имя: " << name << "\n";
         for (int i = 0; i < count; i++) {
-            std::cout << "Spectacle #" << i+1 << ": ";
+            std::cout << "Спектакль #" << i+1 << ": ";
             specs[i].Display();
-            std::cout << "Fill: " << fill[i] << "%\n";
+            std::cout << "Посещаемость: " << fill[i] << "%\n";
         }
     }
 
@@ -98,12 +92,12 @@ int main() {
     s[2].Init(300.0, 50);
     double f[3] = {90.0, 80.0, 75.0};
 
-    spectaclesPerDay monday(3);
-    monday.Init("Monday", s, f, 3);
+    spectaclesPerDay monday;
+    monday.Init("Понедельник", s, f, 3);
 
     monday.Display();
-    std::cout << "Total sales: " << monday.TotalSales() << "\n";
-    std::cout << "Minimum sales spectacle: ";
+    std::cout << "Сумма продаж: " << monday.TotalSales() << "\n";
+    std::cout << "Наименее прибыльный спектакль: ";
     monday.MinSalesSpec().Display();
 
     return 0;
